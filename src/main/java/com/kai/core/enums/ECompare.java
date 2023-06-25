@@ -16,6 +16,7 @@ public enum ECompare {
     GT,
     BW,
     IN,
-    NIN
+    NIN,
+    EXISTS
 
 }

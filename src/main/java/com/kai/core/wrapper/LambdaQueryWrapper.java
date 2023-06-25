@@ -58,9 +58,25 @@ public class LambdaQueryWrapper<T>
     }
 
     @Override
+    public LambdaQueryWrapper<T> eq(boolean condition, String column, Object val) {
+        if (condition) {
+            conditions.add(new Condition(ECompare.EQ, column, Collections.singletonList(val)));
+        }
+        return this;
+    }
+
+    @Override
     public LambdaQueryWrapper<T> ne(boolean condition, SFunction<T, ?> column, Object val) {
         if (condition) {
             conditions.add(new Condition(ECompare.NE, getFieldMeta(column), Collections.singletonList(val)));
+        }
+        return this;
+    }
+
+    @Override
+    public LambdaQueryWrapper<T> exists(boolean condition, SFunction<T, ?> column, Boolean val) {
+        if (condition) {
+            conditions.add(new Condition(ECompare.EXISTS, getFieldMeta(column), Collections.singletonList(val)));
         }
         return this;
     }

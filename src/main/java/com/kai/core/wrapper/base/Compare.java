@@ -1,5 +1,7 @@
 package com.kai.core.wrapper.base;
 
+import org.springframework.context.annotation.Bean;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -112,7 +114,7 @@ public interface Compare<R, P> extends Serializable {
     }
 
     /**
-     * in 条件构建
+     * 等于 条件构建
      *
      * @param condition 是否使用该条件进行构建
      * @param column    参与比较的列
@@ -120,6 +122,16 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R eq(boolean condition, P column, Object val);
+
+    /**
+     * 等于 条件构建
+     *
+     * @param condition 是否使用该条件进行构建
+     * @param column    参与比较的列
+     * @param val       比较值
+     * @return 当前条件构建器
+     */
+    R eq(boolean condition, String column, Object val);
 
     /**
      * ne 条件构建
@@ -130,6 +142,16 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R ne(boolean condition, P column, Object val);
+
+    /**
+     * exists 条件构建
+     *
+     * @param condition 是否使用该条件进行构建
+     * @param column    参与比较的列
+     * @param val       比较值
+     * @return 当前条件构建器
+     */
+    R exists(boolean condition, P column, Boolean val);
 
     /**
      * le 条件构建

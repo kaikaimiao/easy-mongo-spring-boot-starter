@@ -41,7 +41,9 @@ public class QueryBuildUtils {
         HANDLERS.put(ECompare.BW, QueryBuildUtils::bwHandle);
         HANDLERS.put(ECompare.IN, QueryBuildUtils::inHandle);
         HANDLERS.put(ECompare.NIN, QueryBuildUtils::ninHandle);
+        HANDLERS.put(ECompare.EXISTS, QueryBuildUtils::existsHandle);
     }
+
 
     /**
      * 使用条件构建器构建查询条件
@@ -175,6 +177,16 @@ public class QueryBuildUtils {
      */
     private static Criteria neHandle(Condition condition) {
         return Criteria.where(condition.getCol()).ne(condition.getArgs().get(0));
+    }
+
+    /**
+     * exists 处理器
+     *
+     * @param condition 条件参数
+     * @return 构建好的查询条件
+     */
+    private static Criteria existsHandle(Condition condition) {
+        return Criteria.where(condition.getCol()).exists((Boolean) condition.getArgs().get(0));
     }
 
     /**
