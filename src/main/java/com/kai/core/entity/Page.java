@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * 分页数据
@@ -34,7 +37,18 @@ public class Page<T> {
      */
     private int pageNum = 1;
 
-
+    /**
+     * 转换方法
+     *
+     * @param mapper 转换器
+     * @param <R>    转换类型
+     * @return 分页对象
+     */
+    public <R> Page<R> convert(Function<? super T, ? extends R> mapper) {
+        List<R> collect = this.getRecords().stream().map(mapper).collect(toList());
+        ((Page<R>) this).setRecords(collect);
+        return (Page<R>) this;
+    }
 
 
 }
