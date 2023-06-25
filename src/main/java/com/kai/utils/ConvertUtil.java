@@ -1,6 +1,6 @@
 package com.kai.utils;
 
-import com.kai.core.service.base.SFunction;
+import com.kai.core.repository.base.SFunction;
 import lombok.experimental.UtilityClass;
 
 import java.io.Serializable;

@@ -6,10 +6,10 @@ import com.kai.core.constant.ESortType;
 import com.kai.core.entity.Condition;
 import com.kai.core.entity.SelectField;
 import com.kai.core.entity.SortCondition;
-import com.kai.core.service.base.Compare;
-import com.kai.core.service.base.Func;
-import com.kai.core.service.base.Nested;
-import com.kai.core.service.base.SFunction;
+import com.kai.core.repository.base.Compare;
+import com.kai.core.repository.base.Func;
+import com.kai.core.repository.base.Nested;
+import com.kai.core.repository.base.SFunction;
 import com.kai.utils.ConvertUtil;
 import com.kai.utils.ExceptionUtils;
 

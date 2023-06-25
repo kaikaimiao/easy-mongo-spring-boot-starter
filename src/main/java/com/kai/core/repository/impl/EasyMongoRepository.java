@@ -1,9 +1,8 @@
-package com.kai.core.service.impl;
+package com.kai.core.repository.impl;
 
-import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.kai.core.entity.Page;
-import com.kai.core.service.EasyMongoService;
+import com.kai.core.repository.IEasyMongoRepository;
 import com.kai.core.wrapper.LambdaQueryWrapper;
 import com.kai.utils.ClassFieldUtil;
 import com.kai.utils.QueryBuildUtils;
@@ -23,18 +22,18 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 默认的服务实现类
+ * 接口默认类
  *
  * @author loser
  * @date 2023/6/13
  */
 @SuppressWarnings("all")
-public class EasyMongoServiceImpl<T> implements EasyMongoService<T> {
+public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
 
     /**
      * 服务类对应的mongo实体类
      */
-    private final Class<T> targetClass = (Class<T>) ((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    private final Class<T> targetClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     @Resource
     protected MongoTemplate mongoTemplate;

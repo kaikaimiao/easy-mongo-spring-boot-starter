@@ -1,4 +1,4 @@
-package com.kai.core.service;
+package com.kai.core.repository;
 
 import com.kai.core.entity.Page;
 import com.kai.core.wrapper.LambdaQueryWrapper;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author loser
  * @date 2023/6/13
  */
-public interface EasyMongoService<T> {
+public interface IEasyMongoRepository<T> {
 
     /**
      * 查询单条数据
