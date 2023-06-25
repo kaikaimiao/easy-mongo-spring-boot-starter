@@ -1,5 +1,6 @@
 package com.kai.core.wrapper;
 
+import cn.hutool.core.collection.CollUtil;
 import com.kai.core.enums.ECompare;
 import com.kai.core.enums.EConditionType;
 import com.kai.core.enums.ESortType;
@@ -141,7 +142,7 @@ public class LambdaQueryWrapper<T>
     @Override
     public LambdaQueryWrapper<T> or() {
 
-        if (conditions.size() == 0) {
+        if (CollUtil.isEmpty(conditions)) {
             throw ExceptionUtils.mpe("not first use or");
         }
         Condition lastCondition = conditions.get(conditions.size() - 1);
