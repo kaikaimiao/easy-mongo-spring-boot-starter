@@ -1,4 +1,4 @@
-package com.kai.core.repository.base;
+package com.kai.core.wrapper.base;
 
 import java.io.Serializable;
 
