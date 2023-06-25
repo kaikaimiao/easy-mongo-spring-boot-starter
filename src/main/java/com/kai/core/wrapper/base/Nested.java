@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @author kai
  * @date 2023/6/13
  */
-public interface Nested<Param, LambdaQueryWrapper> extends Serializable {
+public interface Nested<P, R> extends Serializable {
 
     /**
      * 嵌套条件构造器
@@ -18,7 +18,7 @@ public interface Nested<Param, LambdaQueryWrapper> extends Serializable {
      * @param func 嵌套条件
      * @return 当前条件构造器
      */
-    default LambdaQueryWrapper and(Function<Param, Param> func) {
+    default R and(Function<P, P> func) {
         return and(true, func);
     }
 
@@ -27,7 +27,7 @@ public interface Nested<Param, LambdaQueryWrapper> extends Serializable {
      *
      * @return 当前条件构造器
      */
-    LambdaQueryWrapper or();
+    R or();
 
     /**
      * 嵌套条件构造器
@@ -36,6 +36,6 @@ public interface Nested<Param, LambdaQueryWrapper> extends Serializable {
      * @param func      嵌套条件
      * @return 当前条件构造器
      */
-    LambdaQueryWrapper and(boolean condition, Function<Param, Param> func);
+    R and(boolean condition, Function<P, P> func);
 
 }

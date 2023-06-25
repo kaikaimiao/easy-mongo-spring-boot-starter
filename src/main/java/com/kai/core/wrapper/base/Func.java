@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author kai
  * @date 2023/6/13
  */
-public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends Serializable {
+public interface Func<T, R, P extends SFunction<T, ?>> extends Serializable {
 
     /**
      * 升序 排序接口
@@ -16,7 +16,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param column 参与排序的列
      * @return 当前构建器
      */
-    default LambdaQueryWrapper orderByAsc(R column) {
+    default R orderByAsc(P column) {
         return orderByAsc(true, column);
     }
 
@@ -26,7 +26,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param column 参与排序的列
      * @return 当前构建器
      */
-    default LambdaQueryWrapper orderByDesc(R column) {
+    default R orderByDesc(P column) {
         return orderByDesc(true, column);
     }
 
@@ -37,7 +37,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param column    参与排序的列
      * @return 当前构建器
      */
-    LambdaQueryWrapper orderByAsc(boolean condition, R column);
+    R orderByAsc(boolean condition, P column);
 
     /**
      * 降序 排序接口
@@ -46,7 +46,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param column    参与排序的列
      * @return 当前构建器
      */
-    LambdaQueryWrapper orderByDesc(boolean condition, R column);
+    R orderByDesc(boolean condition, P column);
 
     /**
      * 分页skip接口
@@ -54,7 +54,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param skip 跳过多少条数据
      * @return 当前构建器
      */
-    LambdaQueryWrapper skip(Long skip);
+    R skip(Long skip);
 
 
     /**
@@ -63,7 +63,7 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param limit 最多取多少条数据
      * @return 当前构建器
      */
-    LambdaQueryWrapper limit(Integer limit);
+    R limit(Integer limit);
 
     /**
      * 需要查询的列,不设置默认查询全部
@@ -71,6 +71,6 @@ public interface Func<T, LambdaQueryWrapper, R extends SFunction<T, ?>> extends 
      * @param columns 查询的列
      * @return 当前构建器
      */
-    LambdaQueryWrapper select(R... columns);
+    R select(P... columns);
 
 }

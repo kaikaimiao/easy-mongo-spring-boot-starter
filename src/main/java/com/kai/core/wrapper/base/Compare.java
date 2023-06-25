@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author kai
  * @date 2023/6/13
  */
-public interface Compare<T, R> extends Serializable {
+public interface Compare<R, P> extends Serializable {
 
     /**
      * eq 条件构建
@@ -18,7 +18,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T eq(R column, Object val) {
+    default R eq(P column, Object val) {
         return eq(true, column, val);
     }
 
@@ -29,7 +29,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T ne(R column, Object val) {
+    default R ne(P column, Object val) {
         return ne(true, column, val);
     }
 
@@ -40,7 +40,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T le(R column, Object val) {
+    default R le(P column, Object val) {
         return le(true, column, val);
     }
 
@@ -51,7 +51,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T lt(R column, Object val) {
+    default R lt(P column, Object val) {
         return lt(true, column, val);
     }
 
@@ -62,7 +62,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T ge(R column, Object val) {
+    default R ge(P column, Object val) {
         return ge(true, column, val);
     }
 
@@ -73,7 +73,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T gt(R column, Object val) {
+    default R gt(P column, Object val) {
         return gt(true, column, val);
     }
 
@@ -85,7 +85,7 @@ public interface Compare<T, R> extends Serializable {
      * @param rightV 右边比较值
      * @return 当前条件构建器
      */
-    default T between(R column, Object leftV, Object rightV) {
+    default R between(P column, Object leftV, Object rightV) {
         return between(true, column, leftV, rightV);
     }
 
@@ -96,7 +96,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T in(R column, Collection<Object> val) {
+    default R in(P column, Collection<Object> val) {
         return in(true, column, val);
     }
 
@@ -107,7 +107,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default T notIn(R column, Collection<Object> val) {
+    default R notIn(P column, Collection<Object> val) {
         return notIn(true, column, val);
     }
 
@@ -119,7 +119,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T eq(boolean condition, R column, Object val);
+    R eq(boolean condition, P column, Object val);
 
     /**
      * ne 条件构建
@@ -129,7 +129,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T ne(boolean condition, R column, Object val);
+    R ne(boolean condition, P column, Object val);
 
     /**
      * le 条件构建
@@ -139,7 +139,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T le(boolean condition, R column, Object val);
+    R le(boolean condition, P column, Object val);
 
     /**
      * lt 条件构建
@@ -149,7 +149,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T lt(boolean condition, R column, Object val);
+    R lt(boolean condition, P column, Object val);
 
     /**
      * ge 条件构建
@@ -159,7 +159,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T ge(boolean condition, R column, Object val);
+    R ge(boolean condition, P column, Object val);
 
     /**
      * gt 条件构建
@@ -169,7 +169,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T gt(boolean condition, R column, Object val);
+    R gt(boolean condition, P column, Object val);
 
     /**
      * between 条件构建 左右均包括
@@ -180,7 +180,7 @@ public interface Compare<T, R> extends Serializable {
      * @param rightV    右边比较值
      * @return 当前条件构建器
      */
-    T between(boolean condition, R column, Object leftV, Object rightV);
+    R between(boolean condition, P column, Object leftV, Object rightV);
 
     /**
      * in 条件构建
@@ -190,7 +190,7 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T in(boolean condition, R column, Collection<Object> val);
+    R in(boolean condition, P column, Collection<Object> val);
 
     /**
      * notIn 条件构建
@@ -200,6 +200,6 @@ public interface Compare<T, R> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    T notIn(boolean condition, R column, Collection<Object> val);
+    R notIn(boolean condition, P column, Collection<Object> val);
 
 }
