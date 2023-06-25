@@ -1,8 +1,9 @@
 package com.kai.core.entity;
 
-import com.kai.core.constant.ECompare;
-import com.kai.core.constant.EConditionType;
+import com.kai.core.enums.ECompare;
+import com.kai.core.enums.EConditionType;
 import com.kai.core.wrapper.ConditionWrapper;
+import lombok.Data;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  * @author kai
  * @date 2023/6/13
  */
+
+@Data
 public class Condition {
 
     public Condition() {
@@ -48,43 +51,4 @@ public class Condition {
      */
     private ConditionWrapper conditionWrapper;
 
-    public EConditionType getConditionType() {
-        return conditionType;
-    }
-
-    public void setConditionType(EConditionType conditionType) {
-        this.conditionType = conditionType;
-    }
-
-    public ECompare getType() {
-        return type;
-    }
-
-    public void setType(ECompare type) {
-        this.type = type;
-    }
-
-    public String getCol() {
-        return col;
-    }
-
-    public void setCol(String col) {
-        this.col = col;
-    }
-
-    public List<Object> getArgs() {
-        return args;
-    }
-
-    public void setArgs(List<Object> args) {
-        this.args = args;
-    }
-
-    public ConditionWrapper getConditionWrapper() {
-        return conditionWrapper;
-    }
-
-    public void setConditionWrapper(ConditionWrapper conditionWrapper) {
-        this.conditionWrapper = conditionWrapper;
-    }
 }

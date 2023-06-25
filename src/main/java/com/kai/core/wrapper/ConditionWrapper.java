@@ -3,6 +3,9 @@ package com.kai.core.wrapper;
 import com.kai.core.entity.Condition;
 import com.kai.core.entity.SelectField;
 import com.kai.core.entity.SortCondition;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.List;
  * @author kai
  * @date 2023/6/13
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConditionWrapper {
 
     /**
@@ -40,54 +46,5 @@ public class ConditionWrapper {
      */
     private Integer limit;
 
-    public ConditionWrapper() {
-    }
 
-    public ConditionWrapper(List<SelectField> fields, List<Condition> conditions, List<SortCondition> sortConditions, Long skip, Integer limit) {
-        this.fields = fields;
-        this.conditions = conditions;
-        this.sortConditions = sortConditions;
-        this.skip = skip;
-        this.limit = limit;
-    }
-
-    public List<SelectField> getFields() {
-        return fields;
-    }
-
-    public void setFields(List<SelectField> fields) {
-        this.fields = fields;
-    }
-
-    public List<Condition> getConditions() {
-        return conditions;
-    }
-
-    public void setConditions(List<Condition> conditions) {
-        this.conditions = conditions;
-    }
-
-    public List<SortCondition> getSortConditions() {
-        return sortConditions;
-    }
-
-    public void setSortConditions(List<SortCondition> sortConditions) {
-        this.sortConditions = sortConditions;
-    }
-
-    public Long getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Long skip) {
-        this.skip = skip;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
 }

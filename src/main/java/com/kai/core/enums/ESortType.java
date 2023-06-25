@@ -1,4 +1,4 @@
-package com.kai.core.constant;
+package com.kai.core.enums;
 
 /**
  * 排序类型

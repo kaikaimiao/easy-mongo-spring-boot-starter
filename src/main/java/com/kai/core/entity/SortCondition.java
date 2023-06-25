@@ -1,6 +1,6 @@
 package com.kai.core.entity;
 
-import com.kai.core.constant.ESortType;
+import com.kai.core.enums.ESortType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

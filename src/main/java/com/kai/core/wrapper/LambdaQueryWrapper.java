@@ -1,8 +1,8 @@
 package com.kai.core.wrapper;
 
-import com.kai.core.constant.ECompare;
-import com.kai.core.constant.EConditionType;
-import com.kai.core.constant.ESortType;
+import com.kai.core.enums.ECompare;
+import com.kai.core.enums.EConditionType;
+import com.kai.core.enums.ESortType;
 import com.kai.core.entity.Condition;
 import com.kai.core.entity.SelectField;
 import com.kai.core.entity.SortCondition;
