@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -58,9 +59,9 @@ public class LambdaQueryWrapper<T>
     }
 
     @Override
-    public LambdaQueryWrapper<T> eq(boolean condition, String column, Object val) {
+    public LambdaQueryWrapper<T> eq(boolean condition, Supplier<String> columnSupplier, Object val) {
         if (condition) {
-            conditions.add(new Condition(ECompare.EQ, column, Collections.singletonList(val)));
+            conditions.add(new Condition(ECompare.EQ, columnSupplier.get(), Collections.singletonList(val)));
         }
         return this;
     }

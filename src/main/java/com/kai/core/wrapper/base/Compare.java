@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 /**
  * 查询条件封装
@@ -126,12 +127,12 @@ public interface Compare<R, P> extends Serializable {
     /**
      * 等于 条件构建
      *
-     * @param condition 是否使用该条件进行构建
-     * @param column    参与比较的列
-     * @param val       比较值
+     * @param condition      是否使用该条件进行构建
+     * @param columnSupplier 参与比较的列
+     * @param val            比较值
      * @return 当前条件构建器
      */
-    R eq(boolean condition, String column, Object val);
+    R eq(boolean condition, Supplier<String> columnSupplier, Object val);
 
     /**
      * ne 条件构建
