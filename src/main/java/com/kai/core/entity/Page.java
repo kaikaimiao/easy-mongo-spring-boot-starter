@@ -20,7 +20,7 @@ public class Page<T> {
     /**
      * 查询数据列表
      */
-    private List<T> records = Collections.emptyList();
+    private List<T> content = Collections.emptyList();
 
     /**
      * 总数
@@ -45,10 +45,13 @@ public class Page<T> {
      * @return 分页对象
      */
     public <R> Page<R> convert(Function<? super T, ? extends R> mapper) {
-        List<R> collect = this.getRecords().stream().map(mapper).collect(toList());
-        ((Page<R>) this).setRecords(collect);
+        List<R> collect = this.getContent().stream().map(mapper).collect(toList());
+        ((Page<R>) this).setContent(collect);
         return (Page<R>) this;
     }
 
-
+    /**
+     * 总页数
+     */
+    private int totalPages = 0;
 }
