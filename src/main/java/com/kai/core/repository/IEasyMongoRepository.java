@@ -1,12 +1,11 @@
 package com.kai.core.repository;
 
-import com.kai.core.entity.Page;
+import com.kai.core.model.Page;
 import com.kai.core.wrapper.LambdaQueryWrapper;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**

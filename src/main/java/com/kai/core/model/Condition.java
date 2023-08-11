@@ -1,4 +1,4 @@
-package com.kai.core.entity;
+package com.kai.core.model;
 
 import com.kai.core.enums.ECompare;
 import com.kai.core.enums.EConditionType;

@@ -19,8 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ClassFieldUtil {
 
 
-
-
     /**
      * 缓存mongo实体的主键字段
      */
@@ -64,6 +62,16 @@ public class ClassFieldUtil {
                 return field;
             }
         }
+        if (clazz.getSuperclass() != null) {
+            for (Field field : clazz.getSuperclass().getDeclaredFields()) {
+                Id annotation = field.getAnnotation(Id.class);
+                if (Objects.nonNull(annotation)) {
+                    FIELD_CACHE.put(clazz, field);
+                    return field;
+                }
+            }
+        }
+
         throw ExceptionUtils.mpe("no exist id");
 
     }

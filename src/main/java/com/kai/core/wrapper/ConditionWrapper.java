@@ -1,8 +1,8 @@
 package com.kai.core.wrapper;
 
-import com.kai.core.entity.Condition;
-import com.kai.core.entity.SelectField;
-import com.kai.core.entity.SortCondition;
+import com.kai.core.model.Condition;
+import com.kai.core.model.SelectField;
+import com.kai.core.model.SortCondition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

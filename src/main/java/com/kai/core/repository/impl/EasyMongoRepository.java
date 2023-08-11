@@ -1,7 +1,7 @@
 package com.kai.core.repository.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.kai.core.entity.Page;
+import com.kai.core.model.Page;
 import com.kai.core.repository.IEasyMongoRepository;
 import com.kai.core.wrapper.LambdaQueryWrapper;
 import com.kai.utils.ClassFieldUtil;
@@ -114,11 +114,8 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
 
     @Override
     public boolean updateById(T entity) {
-        Criteria criteria = Criteria.where("_id").is(ClassFieldUtil.getId(entity));
-        Query query = new Query(criteria);
-        Update update = getUpdate(entity);
-        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, targetClass);
-        return updateResult.getModifiedCount() > 0;
+
+        return this.save(entity);
 
     }
 
@@ -147,6 +144,19 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
             } catch (Exception ignore) {
             }
         }
+        if (entity.getClass().getSuperclass() != null) {
+            for (Field field : entity.getClass().getSuperclass().getDeclaredFields()) {
+                try {
+                    field.setAccessible(true);
+                    Object result = field.get(entity);
+                    if (ObjectUtil.isNotEmpty(result)) {
+                        update.set(field.getName(), result);
+                    }
+                } catch (Exception ignore) {
+                }
+            }
+        }
+
         return update;
 
     }

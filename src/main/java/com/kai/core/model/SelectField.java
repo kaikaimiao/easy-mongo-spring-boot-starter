@@ -1,4 +1,4 @@
-package com.kai.core.entity;
+package com.kai.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
