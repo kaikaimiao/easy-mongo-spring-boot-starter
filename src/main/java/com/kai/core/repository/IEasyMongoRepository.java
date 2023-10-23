@@ -59,6 +59,41 @@ public interface IEasyMongoRepository<T> {
      */
     boolean saveBatch(Collection<T> entityList);
 
+
+    /**
+     * 插入
+     *
+     * @param entity            实体
+     * @param getCollectionName 获取集合名称
+     * @return boolean
+     */
+    boolean insert(T entity, Supplier<String> getCollectionName);
+
+    /**
+     * 批量插入
+     *
+     * @param entityList        实体列表
+     * @param getCollectionName 获取集合名称
+     * @return boolean
+     */
+    boolean insertBatch(Collection<T> entityList, Supplier<String> getCollectionName);
+
+    /**
+     * 插入
+     *
+     * @param entity 实体
+     * @return boolean
+     */
+    boolean insert(T entity);
+
+    /**
+     * 批量插入
+     *
+     * @param entityList 实体列表
+     * @return boolean
+     */
+    boolean insertBatch(Collection<T> entityList);
+
     /**
      * 批量保存新的数据 内部递归调用单个保存
      *

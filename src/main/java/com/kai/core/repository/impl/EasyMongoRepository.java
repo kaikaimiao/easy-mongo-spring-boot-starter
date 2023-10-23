@@ -34,7 +34,8 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
     /**
      * 服务类对应的mongo实体类
      */
-    private final Class<T> targetClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    private final Class<T> targetClass =
+            (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     @Resource
     protected MongoTemplate mongoTemplate;
@@ -67,6 +68,32 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
     public boolean saveBatch(Collection<T> entityList) {
 
         entityList.forEach(item -> mongoTemplate.save(item));
+        return true;
+
+    }
+
+    @Override
+    public boolean insert(T entity, Supplier<String> getCollectionName) {
+        return Objects.nonNull(mongoTemplate.insert(entity, getCollectionName.get()));
+
+    }
+
+    @Override
+    public boolean insertBatch(Collection<T> entityList, Supplier<String> getCollectionName) {
+        mongoTemplate.insert(entityList, getCollectionName.get());
+        return true;
+
+    }
+
+    @Override
+    public boolean insert(T entity) {
+        return Objects.nonNull(mongoTemplate.insert(entity));
+
+    }
+
+    @Override
+    public boolean insertBatch(Collection<T> entityList) {
+        mongoTemplate.insert(entityList);
         return true;
 
     }
@@ -260,7 +287,8 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
     }
 
     @Override
-    public Page<T> page(LambdaQueryWrapper<T> queryWrapper, int pageNo, int pageSize, Supplier<String> getCollectionName) {
+    public Page<T> page(LambdaQueryWrapper<T> queryWrapper, int pageNo, int pageSize,
+                        Supplier<String> getCollectionName) {
         Query query = QueryBuildUtils.buildQuery(queryWrapper);
         Page<T> page = new Page<>();
         page.setPageSize(pageSize);
