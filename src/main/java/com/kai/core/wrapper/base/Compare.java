@@ -99,7 +99,7 @@ public interface Compare<R, P> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default R in(P column, Collection<Object> val) {
+    default R in(P column, Collection<?> val) {
         return in(true, column, val);
     }
 
@@ -110,7 +110,7 @@ public interface Compare<R, P> extends Serializable {
      * @param val    比较值
      * @return 当前条件构建器
      */
-    default R notIn(P column, Collection<Object> val) {
+    default R notIn(P column, Collection<?> val) {
         return notIn(true, column, val);
     }
 
@@ -213,7 +213,7 @@ public interface Compare<R, P> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    R in(boolean condition, P column, Collection<Object> val);
+    R in(boolean condition, P column, Collection<?> val);
 
     /**
      * notIn 条件构建
@@ -223,6 +223,6 @@ public interface Compare<R, P> extends Serializable {
      * @param val       比较值
      * @return 当前条件构建器
      */
-    R notIn(boolean condition, P column, Collection<Object> val);
+    R notIn(boolean condition, P column, Collection<?> val);
 
 }

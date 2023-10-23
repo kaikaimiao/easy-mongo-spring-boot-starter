@@ -246,7 +246,7 @@ public class QueryBuildUtils {
      * @return 构建好的查询条件
      */
     private static Criteria inHandle(Condition condition) {
-        return Criteria.where(condition.getCol()).in(condition.getArgs().get(0));
+        return Criteria.where(condition.getCol()).in((List<?>) condition.getArgs().get(0));
     }
 
     /**
