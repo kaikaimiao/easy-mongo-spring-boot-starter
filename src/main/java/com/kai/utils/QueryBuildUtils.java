@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -42,6 +43,7 @@ public class QueryBuildUtils {
         HANDLERS.put(ECompare.IN, QueryBuildUtils::inHandle);
         HANDLERS.put(ECompare.NIN, QueryBuildUtils::ninHandle);
         HANDLERS.put(ECompare.EXISTS, QueryBuildUtils::existsHandle);
+        HANDLERS.put(ECompare.REGEX, QueryBuildUtils::regex);
     }
 
 
@@ -249,6 +251,7 @@ public class QueryBuildUtils {
         return Criteria.where(condition.getCol()).in((List<?>) condition.getArgs().get(0));
     }
 
+
     /**
      * notIn 处理器
      *
@@ -259,4 +262,13 @@ public class QueryBuildUtils {
         return Criteria.where(condition.getCol()).nin(condition.getArgs().get(0));
     }
 
+    /**
+     * 模糊查询 处理器
+     *
+     * @param condition 条件参数
+     * @return 构建好的查询条件
+     */
+    private static Criteria regex(Condition condition) {
+        return Criteria.where(condition.getCol()).regex(condition.getArgs().get(0).toString(), Optional.ofNullable(condition.getArgs().get(1)).map(item -> item.toString()).orElse(null));
+    }
 }

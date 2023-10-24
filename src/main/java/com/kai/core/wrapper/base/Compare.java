@@ -115,6 +115,31 @@ public interface Compare<R, P> extends Serializable {
     }
 
     /**
+     * regex 条件构建
+     *
+     * @param column 参与比较的列
+     * @param val    比较值
+     * @return 当前条件构建器
+     */
+    default R regex(P column, String val) {
+        return regex(true, column, val);
+    }
+
+    /**
+     * regex 条件构建
+     *
+     * @param column 参与比较的列
+     * @param val    比较值
+     * @param option 参数
+     * @return 当前条件构建器
+     */
+    default R regex(P column, String val, String option) {
+        return regex(true, column, val, option);
+    }
+
+    ;
+
+    /**
      * 等于 条件构建
      *
      * @param condition 是否使用该条件进行构建
@@ -225,4 +250,27 @@ public interface Compare<R, P> extends Serializable {
      */
     R notIn(boolean condition, P column, Collection<?> val);
 
+    /**
+     * regex 条件构建
+     *
+     * @param condition 是否使用该条件进行构建
+     * @param column    参与比较的列
+     * @param val       比较值
+     * @return 当前条件构建器
+     */
+    default R regex(boolean condition, P column, String val) {
+        return regex(condition, column, val, null);
+    }
+
+    ;
+
+    /**
+     * regex 条件构建
+     *
+     * @param condition 是否使用该条件进行构建
+     * @param column    参与比较的列
+     * @param val       比较值
+     * @return 当前条件构建器
+     */
+    R regex(boolean condition, P column, String val, String option);
 }

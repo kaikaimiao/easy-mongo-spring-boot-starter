@@ -17,6 +17,7 @@ public enum ECompare {
     BW,
     IN,
     NIN,
-    EXISTS
+    EXISTS,
+    REGEX
 
 }

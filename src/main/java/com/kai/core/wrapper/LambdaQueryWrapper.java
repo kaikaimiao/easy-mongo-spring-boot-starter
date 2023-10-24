@@ -138,6 +138,14 @@ public class LambdaQueryWrapper<T>
         return this;
     }
 
+    @Override
+    public LambdaQueryWrapper<T> regex(boolean condition, SFunction<T, ?> column, String val, String option) {
+        if (condition) {
+            conditions.add(new Condition(ECompare.REGEX, getFieldMeta(column), Arrays.asList(val, option)));
+        }
+        return this;
+    }
+
 
     @Override
     public LambdaQueryWrapper<T> and(boolean condition, Function<LambdaQueryWrapper<T>, LambdaQueryWrapper<T>> func) {
