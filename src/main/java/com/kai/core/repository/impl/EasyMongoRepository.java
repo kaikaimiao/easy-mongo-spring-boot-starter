@@ -93,7 +93,7 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
 
     @Override
     public boolean insertBatch(Collection<T> entityList) {
-        mongoTemplate.insert(entityList);
+        mongoTemplate.insert(entityList,targetClass);
         return true;
 
     }
