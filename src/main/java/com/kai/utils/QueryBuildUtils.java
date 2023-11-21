@@ -133,8 +133,8 @@ public class QueryBuildUtils {
 
             if (Objects.nonNull(condition.getConditionWrapper()) && Objects.isNull(condition.getCol()) && !condition.getConditionWrapper().getConditions().isEmpty()) {
                 Criteria curCriteria = new Criteria();
-                Condition first = condition.getConditionWrapper().getConditions().get(0);
-                if (first.getConditionType() == EConditionType.OR) {
+//                Condition first = condition.getConditionWrapper().getConditions().get(0);
+                if (condition.getConditionType() == EConditionType.OR) {
                     curCriteria.orOperator(buildCondition(condition.getConditionWrapper()));
                 } else {
                     curCriteria.andOperator(buildCondition(condition.getConditionWrapper()));

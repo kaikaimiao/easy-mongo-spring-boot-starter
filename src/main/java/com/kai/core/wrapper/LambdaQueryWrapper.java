@@ -148,13 +148,29 @@ public class LambdaQueryWrapper<T>
 
 
     @Override
+    public LambdaQueryWrapper<T> or(boolean condition, Function<LambdaQueryWrapper<T>, LambdaQueryWrapper<T>> func) {
+        if (condition) {
+            LambdaQueryWrapper<T> apply = func.apply(new LambdaQueryWrapper<>());
+//            if (this.conditions.size() == 0) {
+//                throw ExceptionUtils.mpe("not first use and");
+//            }
+            ConditionWrapper conditionWrapper = apply.getCondition();
+            Condition c = new Condition();
+            c.setConditionType(EConditionType.OR);
+            c.setConditionWrapper(conditionWrapper);
+            this.conditions.add(c);
+        }
+        return this;
+    }
+
+    @Override
     public LambdaQueryWrapper<T> and(boolean condition, Function<LambdaQueryWrapper<T>, LambdaQueryWrapper<T>> func) {
 
         if (condition) {
             LambdaQueryWrapper<T> apply = func.apply(new LambdaQueryWrapper<>());
-            if (this.conditions.size() == 0) {
-                throw ExceptionUtils.mpe("not first use and");
-            }
+//            if (this.conditions.size() == 0) {
+//                throw ExceptionUtils.mpe("not first use and");
+//            }
             ConditionWrapper conditionWrapper = apply.getCondition();
             Condition c = new Condition();
             c.setConditionWrapper(conditionWrapper);
@@ -164,23 +180,23 @@ public class LambdaQueryWrapper<T>
 
     }
 
-    @Override
-    public LambdaQueryWrapper<T> or() {
-
-        if (CollUtil.isEmpty(conditions)) {
-            throw ExceptionUtils.mpe("not first use or");
-        }
-        Condition lastCondition = conditions.get(conditions.size() - 1);
-        ConditionWrapper conditionWrapper = lastCondition.getConditionWrapper();
-        if (Objects.isNull(conditionWrapper)) {
-            conditionWrapper = new ConditionWrapper(fields, conditions, sortConditions, skip, limit);
-        }
-        List<Condition> sub = conditionWrapper.getConditions();
-        Condition condition = sub.get(sub.size() - 1);
-        condition.setConditionType(EConditionType.OR);
-        return this;
-
-    }
+//    @Override
+//    public LambdaQueryWrapper<T> or() {
+//
+//        if (CollUtil.isEmpty(conditions)) {
+//            throw ExceptionUtils.mpe("not first use or");
+//        }
+//        Condition lastCondition = conditions.get(conditions.size() - 1);
+//        ConditionWrapper conditionWrapper = lastCondition.getConditionWrapper();
+//        if (Objects.isNull(conditionWrapper)) {
+//            conditionWrapper = new ConditionWrapper(fields, conditions, sortConditions, skip, limit);
+//        }
+//        List<Condition> sub = conditionWrapper.getConditions();
+//        Condition condition = sub.get(sub.size() - 1);
+//        condition.setConditionType(EConditionType.OR);
+//        return this;
+//
+//    }
 
     @Override
     public final LambdaQueryWrapper<T> orderByAsc(boolean condition, SFunction<T, ?> column) {

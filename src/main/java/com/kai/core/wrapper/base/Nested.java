@@ -27,7 +27,24 @@ public interface Nested<P, R> extends Serializable {
      *
      * @return 当前条件构造器
      */
-    R or();
+    /**
+     * 嵌套条件构造器
+     *
+     * @param func 嵌套条件
+     * @return 当前条件构造器
+     */
+    default R or(Function<P, P> func) {
+        return or(true, func);
+    }
+
+    /**
+     * 嵌套条件构造器
+     *
+     * @param condition 是否开启嵌套
+     * @param func      嵌套条件
+     * @return 当前条件构造器
+     */
+    R or(boolean condition, Function<P, P> func);
 
     /**
      * 嵌套条件构造器
