@@ -120,17 +120,18 @@ public class QueryBuildUtils {
      */
     public static Criteria[] buildCondition(ConditionWrapper arg) {
 
-        Criteria criteria = new Criteria();
-        if (Objects.isNull(arg) || Objects.isNull(arg.getConditions()) || arg.getConditions().size() == 0) {
-            return new Criteria[]{criteria};
+        if (Objects.isNull(arg) || Objects.isNull(arg.getConditions()) || arg.getConditions().isEmpty()) {
+            return new Criteria[]{new Criteria()};
         }
-        List<Condition> conditions = arg.getConditions();
 
-        boolean isOr = false;
+        List<Condition> conditions = arg.getConditions();
         Criteria[] critters = new Criteria[conditions.size()];
+        boolean isOr = false;
+
         for (int index = 0; index < conditions.size(); index++) {
             Condition condition = conditions.get(index);
-            if (Objects.nonNull(condition.getConditionWrapper()) && Objects.isNull(condition.getCol()) && condition.getConditionWrapper().getConditions().size() > 0) {
+
+            if (Objects.nonNull(condition.getConditionWrapper()) && Objects.isNull(condition.getCol()) && !condition.getConditionWrapper().getConditions().isEmpty()) {
                 Criteria curCriteria = new Criteria();
                 Condition first = condition.getConditionWrapper().getConditions().get(0);
                 if (first.getConditionType() == EConditionType.OR) {
@@ -141,22 +142,27 @@ public class QueryBuildUtils {
                 critters[index] = curCriteria;
                 continue;
             }
+
             ECompare type = condition.getType();
             if (condition.getConditionType() == EConditionType.OR) {
                 isOr = true;
             }
+
             Function<Condition, Criteria> handler = HANDLERS.get(type);
             if (Objects.isNull(handler)) {
                 throw ExceptionUtils.mpe(String.format("buildQuery error not have queryType %s", type));
             }
-            Criteria curCriteria = handler.apply(condition);
-            critters[index] = curCriteria;
+
+            critters[index] = handler.apply(condition);
         }
+
+        Criteria criteria = new Criteria();
         if (isOr) {
             criteria.orOperator(critters);
         } else {
             criteria.andOperator(critters);
         }
+
         return critters;
 
     }

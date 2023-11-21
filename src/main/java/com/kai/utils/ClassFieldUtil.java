@@ -55,25 +55,28 @@ public class ClassFieldUtil {
         if (Objects.nonNull(result)) {
             return result;
         }
+        return findIdField(clazz, clazz);
+    }
+
+    /**
+     * 递归查找主键字段
+     *
+     * @param originalClass 原始类
+     * @param clazz 当前类
+     * @return 主键字段
+     */
+    private static Field findIdField(Class<?> originalClass, Class<?> clazz) {
         for (Field field : clazz.getDeclaredFields()) {
             Id annotation = field.getAnnotation(Id.class);
             if (Objects.nonNull(annotation)) {
-                FIELD_CACHE.put(clazz, field);
+                FIELD_CACHE.put(originalClass, field);
                 return field;
             }
         }
         if (clazz.getSuperclass() != null) {
-            for (Field field : clazz.getSuperclass().getDeclaredFields()) {
-                Id annotation = field.getAnnotation(Id.class);
-                if (Objects.nonNull(annotation)) {
-                    FIELD_CACHE.put(clazz, field);
-                    return field;
-                }
-            }
+            return findIdField(originalClass, clazz.getSuperclass());
         }
-
         throw ExceptionUtils.mpe("no exist id");
-
     }
 
 
