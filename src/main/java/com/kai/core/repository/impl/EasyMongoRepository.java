@@ -4,8 +4,10 @@ import cn.hutool.core.util.ObjectUtil;
 import com.kai.core.model.Page;
 import com.kai.core.repository.IEasyMongoRepository;
 import com.kai.core.wrapper.LambdaQueryWrapper;
+import com.kai.core.wrapper.LambdaUpdateWrapper;
 import com.kai.utils.ClassFieldUtil;
 import com.kai.utils.QueryBuildUtils;
+import com.kai.utils.UpdateBuildUtils;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,7 +27,7 @@ import java.util.function.Supplier;
 /**
  * 接口默认类
  *
- * @author loser
+ * @author kai
  * @date 2023/6/13
  */
 @SuppressWarnings("all")
@@ -93,7 +95,7 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
 
     @Override
     public boolean insertBatch(Collection<T> entityList) {
-        mongoTemplate.insert(entityList,targetClass);
+        mongoTemplate.insert(entityList, targetClass);
         return true;
 
     }
@@ -315,6 +317,41 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
     public boolean exist(LambdaQueryWrapper<T> queryWrapper, Supplier<String> getCollectionName) {
         Query query = QueryBuildUtils.buildQuery(queryWrapper);
         return mongoTemplate.exists(query, targetClass, getCollectionName.get());
+    }
+
+    @Override
+    public boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper) {
+        Query query = QueryBuildUtils.buildQuery(lambdaUpdateWrapper.query());
+        Update update = UpdateBuildUtils.buildUpdate(lambdaUpdateWrapper);
+        return mongoTemplate.updateFirst(query, update, targetClass).wasAcknowledged();
+    }
+
+    @Override
+    public boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, boolean multi) {
+        Query query = QueryBuildUtils.buildQuery(lambdaUpdateWrapper.query());
+        Update update = UpdateBuildUtils.buildUpdate(lambdaUpdateWrapper);
+        if (multi) {
+            return mongoTemplate.updateMulti(query, update, targetClass).wasAcknowledged();
+        }
+        return mongoTemplate.updateFirst(query, update, targetClass).wasAcknowledged();
+    }
+
+    @Override
+    public boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, Supplier<String> getCollectionName) {
+        Query query = QueryBuildUtils.buildQuery(lambdaUpdateWrapper.query());
+        Update update = UpdateBuildUtils.buildUpdate(lambdaUpdateWrapper);
+        return mongoTemplate.updateFirst(query, update, getCollectionName.get()).wasAcknowledged();
+    }
+
+
+    @Override
+    public boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, boolean multi, Supplier<String> getCollectionName) {
+        Query query = QueryBuildUtils.buildQuery(lambdaUpdateWrapper.query());
+        Update update = UpdateBuildUtils.buildUpdate(lambdaUpdateWrapper);
+        if (multi) {
+            return mongoTemplate.updateMulti(query, update, getCollectionName.get()).wasAcknowledged();
+        }
+        return mongoTemplate.updateFirst(query, update, getCollectionName.get()).wasAcknowledged();
     }
 
 }

@@ -6,17 +6,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
+        <version>2.1.15.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kai</groupId>
     <artifactId>easy-mongo-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>2.1.15.1</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <hutool.version>5.3.10</hutool.version>
     </properties>
 

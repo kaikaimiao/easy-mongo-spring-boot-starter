@@ -2,6 +2,7 @@ package com.kai.core.repository;
 
 import com.kai.core.model.Page;
 import com.kai.core.wrapper.LambdaQueryWrapper;
+import com.kai.core.wrapper.LambdaUpdateWrapper;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.function.Supplier;
 /**
  * mongo 基础方法接口
  *
- * @author loser
+ * @author kai
  * @date 2023/6/13
  */
 public interface IEasyMongoRepository<T> {
@@ -277,5 +278,45 @@ public interface IEasyMongoRepository<T> {
      * @return 是否存在数据
      */
     boolean exist(LambdaQueryWrapper<T> queryWrapper, Supplier<String> getCollectionName);
+
+    /**
+     * 跟据条件构建器修改
+     *
+     * @param lambdaUpdateWrapper 条件构建器
+     * @return 是否更新成功
+     */
+    boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper);
+
+    ;
+
+
+    /**
+     * 跟据条件构建器修改
+     *
+     * @param lambdaUpdateWrapper 条件构建器
+     * @param multi               是否批量
+     * @return 是否更新成功
+     */
+    boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, boolean multi);
+
+    /**
+     * 跟据条件构建器修改
+     *
+     * @param lambdaUpdateWrapper 条件构建器
+     * @param getCollectionName   集合构建器
+     * @return 是否更新成功
+     */
+     boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, Supplier<String> getCollectionName);
+
+
+    /**
+     * 跟据条件构建器修改
+     *
+     * @param lambdaUpdateWrapper 条件构建器
+     * @param multi               是否批量
+     * @param getCollectionName   集合构建器
+     * @return 是否更新成功
+     */
+    boolean update(LambdaUpdateWrapper<T> lambdaUpdateWrapper, boolean multi, Supplier<String> getCollectionName);
 
 }

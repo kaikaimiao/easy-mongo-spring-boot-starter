@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConvertUtil {
 
 
-
     public static final String GET = "get";
 
     public static final String IS = "is";
@@ -52,6 +51,9 @@ public class ConvertUtil {
         try {
             String fieldMeta = StringUtils.firstToLowerCase(methodName);
             CLASS_FIELD_META_MAP.put(fn.getClass(), fieldMeta);
+            if ("id".equals(fieldMeta)) {
+                fieldMeta = "_id";
+            }
             return fieldMeta;
         } catch (Exception e) {
             throw new RuntimeException(e);
