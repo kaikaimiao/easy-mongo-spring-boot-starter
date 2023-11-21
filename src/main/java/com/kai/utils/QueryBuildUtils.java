@@ -244,7 +244,7 @@ public class QueryBuildUtils {
      * @return 构建好的查询条件
      */
     private static Criteria bwHandle(Condition condition) {
-        return Criteria.where(condition.getCol()).lte(condition.getArgs().get(0)).gt(condition.getArgs().get(1));
+        return Criteria.where(condition.getCol()).gt(condition.getArgs().get(0)).lte(condition.getArgs().get(1));
     }
 
     /**
