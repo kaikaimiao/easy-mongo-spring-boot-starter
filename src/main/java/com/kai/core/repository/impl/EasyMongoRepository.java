@@ -6,6 +6,7 @@ import com.kai.core.repository.IEasyMongoRepository;
 import com.kai.core.wrapper.LambdaQueryWrapper;
 import com.kai.core.wrapper.LambdaUpdateWrapper;
 import com.kai.utils.ClassFieldUtil;
+import com.kai.utils.ProxyUtils;
 import com.kai.utils.QueryBuildUtils;
 import com.kai.utils.UpdateBuildUtils;
 import com.mongodb.client.result.DeleteResult;
@@ -161,11 +162,27 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
      * 通过反射获取需要更新的字段
      */
     private Update getUpdate(T entity) {
-
         Update update = new Update();
-        for (Field field : entity.getClass().getDeclaredFields()) {
+        update(entity, entity.getClass(), update);
+        return update;
+
+    }
+
+    /**
+     * 递归查询
+     *
+     * @param entity 实际对象
+     * @param aclass calss信息
+     * @param update 更新对象
+     * @param <T>    泛型
+     */
+    public void update(T entity, Class<?> aclass, Update update) {
+        for (Field field : aclass.getDeclaredFields()) {
             try {
                 field.setAccessible(true);
+                if (field.getName().contains("$")) {
+                    continue;
+                }
                 Object result = field.get(entity);
                 if (ObjectUtil.isNotEmpty(result)) {
                     update.set(field.getName(), result);
@@ -173,22 +190,13 @@ public class EasyMongoRepository<T> implements IEasyMongoRepository<T> {
             } catch (Exception ignore) {
             }
         }
-        if (entity.getClass().getSuperclass() != null) {
-            for (Field field : entity.getClass().getSuperclass().getDeclaredFields()) {
-                try {
-                    field.setAccessible(true);
-                    Object result = field.get(entity);
-                    if (ObjectUtil.isNotEmpty(result)) {
-                        update.set(field.getName(), result);
-                    }
-                } catch (Exception ignore) {
-                }
-            }
+        Class<?> superclass = aclass.getSuperclass();
+        if (superclass != null && !ProxyUtils.isProxyClass(superclass)) {
+            update(entity, superclass, update);
         }
 
-        return update;
-
     }
+
 
     @Override
     public boolean update(T entity, LambdaQueryWrapper<T> queryWrapper) {

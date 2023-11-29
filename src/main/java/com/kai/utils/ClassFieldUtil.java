@@ -62,7 +62,7 @@ public class ClassFieldUtil {
      * 递归查找主键字段
      *
      * @param originalClass 原始类
-     * @param clazz 当前类
+     * @param clazz         当前类
      * @return 主键字段
      */
     private static Field findIdField(Class<?> originalClass, Class<?> clazz) {

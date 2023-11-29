@@ -54,6 +54,12 @@ public class ConvertUtil {
         });
     }
 
+
+
+    public static void main(String[] args) {
+        convertToFieldName(ClassFieldUtil::getId);
+    }
+
     /**
      * 获取一个实现了序列化的lambda函数
      *
