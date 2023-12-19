@@ -1,7 +1,5 @@
 package com.kai.core.wrapper.base;
 
-import org.springframework.context.annotation.Bean;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -103,6 +101,8 @@ public interface Compare<R, P> extends Serializable {
         return in(true, column, val);
     }
 
+
+
     /**
      * notIn 条件构建
      *
@@ -113,6 +113,8 @@ public interface Compare<R, P> extends Serializable {
     default R notIn(P column, Collection<?> val) {
         return notIn(true, column, val);
     }
+
+
 
     /**
      * regex 条件构建
@@ -126,6 +128,9 @@ public interface Compare<R, P> extends Serializable {
     }
 
     /**
+
+
+    /**
      * regex 条件构建
      *
      * @param column 参与比较的列
@@ -137,7 +142,7 @@ public interface Compare<R, P> extends Serializable {
         return regex(true, column, val, option);
     }
 
-    ;
+
 
     /**
      * 等于 条件构建
@@ -148,6 +153,8 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R eq(boolean condition, P column, Object val);
+
+
 
     /**
      * 等于 条件构建
@@ -169,6 +176,8 @@ public interface Compare<R, P> extends Serializable {
      */
     R ne(boolean condition, P column, Object val);
 
+
+
     /**
      * exists 条件构建
      *
@@ -178,6 +187,8 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R exists(boolean condition, P column, Boolean val);
+
+
 
     /**
      * le 条件构建
@@ -189,6 +200,8 @@ public interface Compare<R, P> extends Serializable {
      */
     R le(boolean condition, P column, Object val);
 
+
+
     /**
      * lt 条件构建
      *
@@ -198,6 +211,8 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R lt(boolean condition, P column, Object val);
+
+
 
     /**
      * ge 条件构建
@@ -209,6 +224,8 @@ public interface Compare<R, P> extends Serializable {
      */
     R ge(boolean condition, P column, Object val);
 
+
+
     /**
      * gt 条件构建
      *
@@ -218,6 +235,8 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R gt(boolean condition, P column, Object val);
+
+
 
     /**
      * between 条件构建 左右均包括
@@ -230,6 +249,9 @@ public interface Compare<R, P> extends Serializable {
      */
     R between(boolean condition, P column, Object leftV, Object rightV);
 
+
+
+
     /**
      * in 条件构建
      *
@@ -240,6 +262,8 @@ public interface Compare<R, P> extends Serializable {
      */
     R in(boolean condition, P column, Collection<?> val);
 
+
+
     /**
      * notIn 条件构建
      *
@@ -249,6 +273,8 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R notIn(boolean condition, P column, Collection<?> val);
+
+
 
     /**
      * regex 条件构建
@@ -262,7 +288,8 @@ public interface Compare<R, P> extends Serializable {
         return regex(condition, column, val, null);
     }
 
-    ;
+
+
 
     /**
      * regex 条件构建
@@ -273,4 +300,28 @@ public interface Compare<R, P> extends Serializable {
      * @return 当前条件构建器
      */
     R regex(boolean condition, P column, String val, String option);
+
+    /**
+     * 给你当前条件的字段拼接一个子字段 嵌段文档使用
+     *
+     * @param sFunction 嵌套对象属性的get方法
+     * @param <N>       子对象类型
+     * @param <E>       属性类型
+     * @return 当前条件构造器
+     */
+    default <N, E> R setChild(SFunction<N, E> sFunction) {
+        return setChild(true, sFunction);
+    }
+
+    ;
+
+    /**
+     * 给你当前条件的字段拼接一个子字段 嵌段文档使用
+     *
+     * @param sFunction 嵌套对象属性的get方法
+     * @param <N>       子对象类型
+     * @param <E>       属性类型
+     * @return 当前条件构造器
+     */
+    <N, E> R setChild(boolean condition, SFunction<N, E> sFunction);
 }

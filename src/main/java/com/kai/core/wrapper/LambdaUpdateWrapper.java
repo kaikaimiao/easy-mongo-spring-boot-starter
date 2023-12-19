@@ -1,21 +1,12 @@
 package com.kai.core.wrapper;
 
-import cn.hutool.core.collection.CollUtil;
-import com.kai.core.enums.ECompare;
-import com.kai.core.enums.EConditionType;
-import com.kai.core.enums.ESortType;
-import com.kai.core.model.Condition;
-import com.kai.core.model.SelectField;
 import com.kai.core.model.SetCondition;
-import com.kai.core.model.SortCondition;
-import com.kai.core.wrapper.base.*;
+import com.kai.core.wrapper.base.SFunction;
+import com.kai.core.wrapper.base.UpdateSet;
 import com.kai.utils.ConvertUtil;
-import com.kai.utils.ExceptionUtils;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 条件构建器
@@ -46,6 +37,18 @@ public class LambdaUpdateWrapper<T>
         }
         return this;
     }
+
+    @Override
+    public <N, E> LambdaUpdateWrapper<T> setChild(boolean condition, SFunction<N, E> sFunction) {
+        if (!condition) {
+            return this;
+        }
+        SetCondition setCondition = setConditionList.get(setConditionList.size() - 1);
+        String col = setCondition.getCol();
+        setCondition.setCol(col + "." + ConvertUtil.convertToFieldName(sFunction));
+        return this;
+    }
+
 
     private String getFieldMeta(SFunction<T, ?> column) {
         return ConvertUtil.convertToFieldName(column);

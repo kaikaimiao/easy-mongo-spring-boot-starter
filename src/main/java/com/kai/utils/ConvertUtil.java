@@ -7,9 +7,12 @@ import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * 转转换工具
@@ -24,6 +27,9 @@ public class ConvertUtil {
     public static final String GET = "get";
 
     public static final String IS = "is";
+
+
+    private static final String SPLIT = ".";
 
     /**
      * 缓存方法应用对应的属性名称
@@ -54,7 +60,35 @@ public class ConvertUtil {
         });
     }
 
+    /**
+     * 批量转换，逗号分割
+     *
+     * @param fn   主要类型
+     * @param list 集合
+     * @return 结果
+     */
+    public static <T> String convertToFieldName(SFunction<T, ?> fn, SFunction<?, ?>... list) {
+        List<String> stringList = new ArrayList<>();
+        stringList.add(convertToFieldName(fn));
+        for (SFunction<?, ?> sFunction : list) {
+            stringList.add(convertToFieldName(sFunction));
+        }
+        return stringList.stream().collect(Collectors.joining(SPLIT));
+    }
 
+    /**
+     * 批量转换，逗号分割
+     *
+     * @param list 集合
+     * @return 结果
+     */
+    public static String convertToFieldName(SFunction<?, ?>... list) {
+        List<String> stringList = new ArrayList<>();
+        for (SFunction<?, ?> sFunction : list) {
+            stringList.add(convertToFieldName(sFunction));
+        }
+        return stringList.stream().collect(Collectors.joining(SPLIT));
+    }
 
     public static void main(String[] args) {
         convertToFieldName(ClassFieldUtil::getId);

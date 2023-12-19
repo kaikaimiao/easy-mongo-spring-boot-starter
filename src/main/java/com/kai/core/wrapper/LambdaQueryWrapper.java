@@ -1,6 +1,5 @@
 package com.kai.core.wrapper;
 
-import cn.hutool.core.collection.CollUtil;
 import com.kai.core.enums.ECompare;
 import com.kai.core.enums.EConditionType;
 import com.kai.core.enums.ESortType;
@@ -12,14 +11,8 @@ import com.kai.core.wrapper.base.Func;
 import com.kai.core.wrapper.base.Nested;
 import com.kai.core.wrapper.base.SFunction;
 import com.kai.utils.ConvertUtil;
-import com.kai.utils.ExceptionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -143,6 +136,17 @@ public class LambdaQueryWrapper<T>
         if (condition) {
             conditions.add(new Condition(ECompare.REGEX, getFieldMeta(column), Arrays.asList(val, option)));
         }
+        return this;
+    }
+
+    @Override
+    public <N, E> LambdaQueryWrapper<T> setChild(boolean condition, SFunction<N, E> sFunction) {
+        if (!condition) {
+            return this;
+        }
+        Condition queryCondition = conditions.get(conditions.size() - 1);
+        String col = queryCondition.getCol();
+        queryCondition.setCol(col + "." + ConvertUtil.convertToFieldName(sFunction));
         return this;
     }
 
