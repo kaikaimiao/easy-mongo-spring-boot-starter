@@ -65,7 +65,7 @@ mongo-orm封装
        注意setChild方法表示对当前拼接的查询拼接嵌套查询
         上面master属性是child类型 name是child的属性
       ```
-    - 字段填充钩子
+    - 字段填充钩子，可以用于字段填充，比如创建时间，修改时间等
       ```
        public interface MongoEventProcess {
        /**
